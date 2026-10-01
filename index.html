@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="Pradesh Apps — Android apps available on Google Play." />
+  <title>Pradesh Apps | Android Developer</title>
+
+  <style>
+    :root{
+      --bg:#070b14;
+      --card:#0f172a;
+      --card2:#111827;
+      --text:#f8fafc;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,.09);
+      --accent:#7c3aed;
+      --accent2:#2563eb;
+      --green:#22c55e;
+      --shadow:0 24px 70px rgba(0,0,0,.32);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(124,58,237,.22), transparent 26%),
+        radial-gradient(circle at 88% 18%, rgba(37,99,235,.20), transparent 24%),
+        linear-gradient(180deg,#070b14 0%,#0b1020 100%);
+      min-height:100vh;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .wrap{width:min(1120px,92%);margin:auto}
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(16px);
+      background:rgba(7,11,20,.72);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+
+    .brand-mark{
+      width:40px;
+      height:40px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 10px 28px rgba(124,58,237,.35);
+      font-size:18px;
+    }
+
+    .nav-links{display:flex;align-items:center;gap:24px;color:#d1d5db;font-size:14px}
+    .nav-links a:hover{color:#fff}
+
+    .hero{
+      padding:105px 0 82px;
+      text-align:center;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 13px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.035);
+      color:#d1d5db;
+      font-size:13px;
+      margin-bottom:24px;
+    }
+
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 16px rgba(34,197,94,.7)}
+
+    h1{
+      margin:0 auto;
+      max-width:840px;
+      font-size:clamp(44px,7vw,78px);
+      line-height:1.02;
+      letter-spacing:-2.7px;
+    }
+
+    .gradient{
+      background:linear-gradient(90deg,#c4b5fd,#93c5fd,#67e8f9);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{
+      max-width:720px;
+      margin:24px auto 0;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.75;
+    }
+
+    .hero-actions{
+      margin-top:32px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 19px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      font-weight:700;
+      font-size:14px;
+      transition:.2s ease;
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-color:transparent;
+      box-shadow:0 12px 28px rgba(37,99,235,.23);
+    }
+
+    .btn.secondary{background:rgba(255,255,255,.045)}
+    .btn:hover{transform:translateY(-2px);filter:brightness(1.07)}
+
+    section{padding:72px 0}
+    .section-head{margin-bottom:28px}
+    .eyebrow{
+      color:#a78bfa;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:1.8px;
+      font-size:12px;
+    }
+    h2{font-size:clamp(30px,4vw,44px);margin:8px 0 0;letter-spacing:-1.3px}
+    .section-head p{color:var(--muted);max-width:690px;line-height:1.7;margin:12px 0 0}
+
+    .apps-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .app-card{
+      position:relative;
+      overflow:hidden;
+      padding:22px;
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));
+      box-shadow:var(--shadow);
+      transition:.22s ease;
+    }
+
+    .app-card:hover{transform:translateY(-5px);border-color:rgba(167,139,250,.45)}
+    .app-top{display:flex;align-items:center;gap:15px;margin-bottom:19px}
+    .app-icon{
+      width:76px;
+      height:76px;
+      border-radius:18px;
+      object-fit:cover;
+      border:1px solid rgba(255,255,255,.12);
+      background:#0b1220;
+    }
+    .app-card h3{font-size:19px;line-height:1.3;margin:0}
+    .category{color:var(--muted);font-size:13px;margin-top:6px}
+    .app-card p{color:#b7c0ce;line-height:1.66;font-size:14px;min-height:92px}
+    .app-meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding-top:16px;
+      margin-top:8px;
+      border-top:1px solid var(--line);
+    }
+    .store-link{font-weight:800;font-size:14px;color:#c4b5fd}
+    .store-link:hover{color:white}
+    .tag{
+      color:#d1fae5;
+      background:rgba(34,197,94,.1);
+      border:1px solid rgba(34,197,94,.18);
+      border-radius:999px;
+      padding:6px 9px;
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:28px;
+      background:rgba(255,255,255,.035);
+    }
+
+    .panel h3{margin:0 0 12px;font-size:22px}
+    .panel p{color:var(--muted);line-height:1.75;margin:0}
+    .mini-list{display:grid;gap:14px;margin-top:18px}
+    .mini{
+      padding:15px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.035);
+      border:1px solid var(--line);
+    }
+    .mini strong{display:block;margin-bottom:3px}
+    .mini span{color:var(--muted);font-size:13px}
+
+    .contact{
+      text-align:center;
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:46px 24px;
+      background:
+        radial-gradient(circle at 25% 0%, rgba(124,58,237,.18), transparent 30%),
+        rgba(255,255,255,.035);
+    }
+    .contact p{color:var(--muted);max-width:620px;margin:12px auto 24px;line-height:1.7}
+
+    footer{
+      padding:28px 0 38px;
+      color:#8b95a5;
+      font-size:13px;
+      border-top:1px solid var(--line);
+      margin-top:48px;
+    }
+    .footer-row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .footer-links{display:flex;gap:18px;flex-wrap:wrap}
+    .footer-links a:hover{color:#fff}
+
+    @media (max-width:900px){
+      .apps-grid{grid-template-columns:1fr 1fr}
+      .about-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width:640px){
+      .nav-links{display:none}
+      .hero{padding:78px 0 56px}
+      h1{letter-spacing:-1.8px}
+      .hero p{font-size:16px}
+      section{padding:54px 0}
+      .apps-grid{grid-template-columns:1fr}
+      .app-card p{min-height:auto}
+      .footer-row{flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Pradesh Apps home">
+        <span class="brand-mark">P</span>
+        <span>Pradesh Apps</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#apps">Apps</a>
+        <a href="#about">About</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="pill"><span class="dot"></span> Android apps on Google Play</div>
+        <h1>Simple apps made for <span class="gradient">everyday use.</span></h1>
+        <p>
+          Pradesh Apps develops Android experiences focused on easy navigation,
+          useful content and a straightforward mobile experience.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="https://play.google.com/store/apps/developer?id=Pradesh+Apps" target="_blank" rel="noopener">
+            View on Google Play
+          </a>
+          <a class="btn secondary" href="#apps">Explore our apps</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="apps">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Our apps</div>
+          <h2>Available on Google Play</h2>
+          <p>Explore Android apps published under the Pradesh Apps developer profile.</p>
+        </div>
+
+        <div class="apps-grid">
+          <article class="app-card">
+            <div class="app-top">
+              <img
+                class="app-icon"
+                src="https://play-lh.googleusercontent.com/IOJBNcAky0HTmqEWktSMGCaoRy3xOH9jOL33upOL67XNDAHsV5sSvkhhidyHY-7nq4xI57hGlvpfdpQBmIOprg=w240-h480"
+                alt="BIXPLUS app icon"
+                loading="lazy"
+              />
+              <div>
+                <h3>BIXPLUS</h3>
+                <div class="category">Entertainment</div>
+              </div>
+            </div>
+            <p>
+              A media player and browser with content discovery, search, favorites,
+              recent items and flexible playback options.
+            </p>
+            <div class="app-meta">
+              <span class="tag">Android</span>
+              <a class="store-link" href="https://play.google.com/store/apps/details?id=com.bixmax.movies" target="_blank" rel="noopener">
+                Google Play ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="app-card" dir="rtl">
+            <div class="app-top">
+              <img
+                class="app-icon"
+                src="https://play-lh.googleusercontent.com/Zbrr1p5xywD0PmXtMpIefjBYr8umXYfRSeQjrQzuta9cUgR-auFY1P-Eo1tymuyFmYqjMYeNQ_pYRuPzE2Sa=w240-h480"
+                alt="ادعية تريح القلوب بدون نت"
+                loading="lazy"
+              />
+              <div>
+                <h3>ادعية تريح القلوب بدون نت</h3>
+                <div class="category">كتب ومراجع</div>
+              </div>
+            </div>
+            <p>
+              تطبيق أدعية يعمل بدون إنترنت ويوفر مجموعة من الأدعية المكتوبة
+              في واجهة بسيطة وسهلة الاستخدام.
+            </p>
+            <div class="app-meta">
+              <span class="tag">Android</span>
+              <a class="store-link" href="https://play.google.com/store/apps/details?id=com.parayforallahajat.prayers" target="_blank" rel="noopener">
+                Google Play ↗
+              </a>
+            </div>
+          </article>
+
+          <article class="app-card" dir="rtl">
+            <div class="app-top">
+              <img
+                class="app-icon"
+                src="https://play-lh.googleusercontent.com/Hs-R1Cpgr8Qo1ioNnkY0CJ_4AVs4QKv56bmHoCVrU6RxCKFwXC-YK9b6pL8N-KkjCuakVFf1fV5Zg0hoVyAK6Q=w240-h480"
+                alt="ادعية العمرة بدون نت"
+                loading="lazy"
+              />
+              <div>
+                <h3>ادعية العمرة بدون نت</h3>
+                <div class="category">كتب ومراجع</div>
+              </div>
+            </div>
+            <p>
+              أدعية للعمرة والطواف والسعي يمكن الوصول إليها بدون اتصال بالإنترنت
+              بعد تثبيت التطبيق.
+            </p>
+            <div class="app-meta">
+              <span class="tag">Android</span>
+              <a class="store-link" href="https://play.google.com/store/apps/details?id=com.douaaoumra.oumraprayerss" target="_blank" rel="noopener">
+                Google Play ↗
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">About</div>
+          <h2>Pradesh Apps</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="panel">
+            <h3>Mobile-first experiences</h3>
+            <p>
+              We create and maintain Android applications with an emphasis on
+              simple interfaces, practical features and accessible experiences.
+              Our published apps can be found on the official Pradesh Apps
+              developer page on Google Play.
+            </p>
+          </div>
+
+          <div class="panel">
+            <h3>What we focus on</h3>
+            <div class="mini-list">
+              <div class="mini">
+                <strong>Easy to use</strong>
+                <span>Clear navigation and straightforward app flows.</span>
+              </div>
+              <div class="mini">
+                <strong>Android focused</strong>
+                <span>Apps distributed through Google Play.</span>
+              </div>
+              <div class="mini">
+                <strong>Support</strong>
+                <span>Contact options for questions and app-related feedback.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="wrap">
+        <div class="panel">
+          <div class="eyebrow">Privacy</div>
+          <h2 style="margin-bottom:14px">Privacy & data information</h2>
+          <p>
+            Data practices can differ between applications depending on their features
+            and third-party services. For the most current privacy and data-safety
+            information for a specific app, please review its Google Play listing and
+            the privacy-policy link shown in the app's store page.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact">
+          <div class="eyebrow">Contact</div>
+          <h2>Need support?</h2>
+          <p>
+            For questions about Pradesh Apps or one of our Android applications,
+            contact us by email.
+          </p>
+          <a class="btn primary" href="mailto:doncristiano68@gmail.com">doncristiano68@gmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div>© <span id="year"></span> Pradesh Apps. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#privacy">Privacy</a>
+        <a href="https://play.google.com/store/apps/developer?id=Pradesh+Apps" target="_blank" rel="noopener">Google Play</a>
+        <a href="mailto:doncristiano68@gmail.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
